@@ -7,17 +7,62 @@
 //
 
 import UIKit
+import CoreData
 
 class KidsTableViewController: UITableViewController {
     
-    var kids = [String]()
+    var kids = [Kid]()
+    
+    // Retreive the managedObjectContext from AppDelegate
+    let managedObjectContext = appDelegate.persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        self.kids.append("Tommy")
-        self.kids.append("Fiona")
-        self.kids.append("Max")
+        // Create a new fetch request using the KidItem entity
+//        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
+//        
+//        // Execute the fetch request, and cast the results to an array of LogItem objects
+//        do {
+//            let searchResults = try request.execute()
+//            self.kids = searchResults
+//            self.tableView.reloadData()
+//        } catch {
+//            print("Error with request: \(error)")
+//        }
+        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
+        
+        managedObjectContext.perform {
+            self.kids = try! request.execute()
+            self.tableView.reloadData()
+        }
+        
+        
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            return
+//        }
+//        
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        
+//        let entity = NSEntityDescription.entity(forEntityName: "Kid",
+//                                                in: managedContext)!
+//        
+//        let person = NSManagedObject(entity: entity,
+//                                     insertInto: managedContext)
+//        
+//        person.setValue(name, forKeyPath: "name")
+//        
+//        do {
+//            try managedContext.save()
+//            people.append(person)
+//        } catch let error as NSError {
+//            print("Could not save. \(error), \(error.userInfo)")
+//        }
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -32,7 +77,7 @@ class KidsTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "kidsCell", for: indexPath) as! KidsTableCell
         
-        cell.nameLabel.text = kids[indexPath.row]
+        cell.nameLabel.text = kids[indexPath.row].fname
         
         return cell
         

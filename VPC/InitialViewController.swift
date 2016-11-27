@@ -8,6 +8,8 @@
 
 import UIKit
 
+let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+
 class InitialViewController: UIViewController {
     
     override func viewDidLoad() {
@@ -18,9 +20,9 @@ class InitialViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let userIsRegistered = false
+        let userIsRegistered = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             if userIsRegistered {
                 let controller = storyboard.instantiateViewController(withIdentifier: "mainTabBarController") as! UITabBarController
                 controller.selectedIndex = 1

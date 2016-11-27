@@ -20,6 +20,9 @@
 		99BC98B11DEB0E8200B22233 /* ActivityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98B01DEB0E8200B22233 /* ActivityTableViewController.swift */; };
 		99BC98B31DEB0EA900B22233 /* ActivityTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98B21DEB0EA900B22233 /* ActivityTableCell.swift */; };
 		99BC98B51DEB1AA100B22233 /* KidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98B41DEB1AA100B22233 /* KidViewController.swift */; };
+		99BC98BF1DEB2A9D00B22233 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98B91DEB2A9D00B22233 /* Parent.swift */; };
+		99BC98C11DEB2A9D00B22233 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98BB1DEB2A9D00B22233 /* Activity.swift */; };
+		99BC98C31DEB2A9D00B22233 /* Kid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98BD1DEB2A9D00B22233 /* Kid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		99BC98B01DEB0E8200B22233 /* ActivityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableViewController.swift; sourceTree = "<group>"; };
 		99BC98B21DEB0EA900B22233 /* ActivityTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityTableCell.swift; sourceTree = "<group>"; };
 		99BC98B41DEB1AA100B22233 /* KidViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KidViewController.swift; sourceTree = "<group>"; };
+		99BC98B91DEB2A9D00B22233 /* Parent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parent.swift; path = ../Parent.swift; sourceTree = "<group>"; };
+		99BC98BB1DEB2A9D00B22233 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = ../Activity.swift; sourceTree = "<group>"; };
+		99BC98BD1DEB2A9D00B22233 /* Kid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Kid.swift; path = ../Kid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,11 +92,11 @@
 		99BC98B61DEB27AA00B22233 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				99BC98931DEB016500B22233 /* RegistrationViewController.swift */,
 				99BC98A61DEB071F00B22233 /* InitialViewController.swift */,
-				99BC98AA1DEB0A3700B22233 /* ProfileViewController.swift */,
+				99BC98931DEB016500B22233 /* RegistrationViewController.swift */,
 				99BC98AC1DEB0C2A00B22233 /* KidsTableViewController.swift */,
 				99BC98B01DEB0E8200B22233 /* ActivityTableViewController.swift */,
+				99BC98AA1DEB0A3700B22233 /* ProfileViewController.swift */,
 				99BC98B41DEB1AA100B22233 /* KidViewController.swift */,
 			);
 			name = "View Controllers";
@@ -108,6 +114,9 @@
 		99BC98B81DEB27BF00B22233 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				99BC98B91DEB2A9D00B22233 /* Parent.swift */,
+				99BC98BD1DEB2A9D00B22233 /* Kid.swift */,
+				99BC98BB1DEB2A9D00B22233 /* Activity.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -185,10 +194,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99BC98C31DEB2A9D00B22233 /* Kid.swift in Sources */,
 				99BC98B11DEB0E8200B22233 /* ActivityTableViewController.swift in Sources */,
+				99BC98C11DEB2A9D00B22233 /* Activity.swift in Sources */,
 				99BC98B31DEB0EA900B22233 /* ActivityTableCell.swift in Sources */,
 				99BC98AD1DEB0C2A00B22233 /* KidsTableViewController.swift in Sources */,
 				99BC98941DEB016500B22233 /* RegistrationViewController.swift in Sources */,
+				99BC98BF1DEB2A9D00B22233 /* Parent.swift in Sources */,
 				99BC989A1DEB016500B22233 /* VPC.xcdatamodeld in Sources */,
 				99BC98AB1DEB0A3700B22233 /* ProfileViewController.swift in Sources */,
 				99BC98AF1DEB0CF700B22233 /* KidsTableCell.swift in Sources */,
