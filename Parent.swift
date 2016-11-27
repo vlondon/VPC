@@ -10,6 +10,7 @@
 import Foundation
 import CoreData
 
+@objc(Parent)
 class Parent: NSManagedObject {
     static let entityName = "Parent"
 }
@@ -20,12 +21,21 @@ extension Parent {
         return NSFetchRequest<Parent>(entityName: "Parent");
     }
     
+    @NSManaged public var email: String?
     @NSManaged public var fname: String?
     @NSManaged public var lname: String?
     @NSManaged public var mobile: String?
-    @NSManaged public var email: String?
+    @NSManaged public var pid: String?
     
-    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, mobile: String, email: String) -> Parent {
+    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, mobile: String, email: String, pid: String) -> Parent {
+        
+        
+        print("parent:")
+        print("\(fname)")
+        print("\(lname)")
+        print("\(mobile)")
+        print("\(email)")
+        print("\(pid)")
         
         let newItem = Parent(context: moc)
         
@@ -33,6 +43,7 @@ extension Parent {
         newItem.lname = lname
         newItem.mobile = mobile
         newItem.email = email
+        newItem.pid = pid
         
         //save the object
         do {

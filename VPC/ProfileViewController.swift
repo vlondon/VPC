@@ -17,8 +17,9 @@ class ProfileViewController: UIViewController {
     
     @IBAction func logout(_ sender: UIBarButtonItem) {
         
-        // TODO: Clean out database
+        UserDefaults.standard.set(nil, forKey: "pid")
         
+        // TODO: Clean out database
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "initialViewController")

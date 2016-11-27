@@ -83,6 +83,31 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		99154F991DEB5695009D3656 /* Kids */ = {
+			isa = PBXGroup;
+			children = (
+				99BC98AC1DEB0C2A00B22233 /* KidsTableViewController.swift */,
+				99BC98B41DEB1AA100B22233 /* KidViewController.swift */,
+			);
+			name = Kids;
+			sourceTree = "<group>";
+		};
+		99154F9A1DEB56A0009D3656 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				99BC98B01DEB0E8200B22233 /* ActivityTableViewController.swift */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
+		99154F9B1DEB56A8009D3656 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				99BC98AA1DEB0A3700B22233 /* ProfileViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		99BC98851DEB016500B22233 = {
 			isa = PBXGroup;
 			children = (
@@ -123,10 +148,9 @@
 			children = (
 				99BC98A61DEB071F00B22233 /* InitialViewController.swift */,
 				99BC98931DEB016500B22233 /* RegistrationViewController.swift */,
-				99BC98AC1DEB0C2A00B22233 /* KidsTableViewController.swift */,
-				99BC98B01DEB0E8200B22233 /* ActivityTableViewController.swift */,
-				99BC98AA1DEB0A3700B22233 /* ProfileViewController.swift */,
-				99BC98B41DEB1AA100B22233 /* KidViewController.swift */,
+				99154F991DEB5695009D3656 /* Kids */,
+				99154F9A1DEB56A0009D3656 /* Activity */,
+				99154F9B1DEB56A8009D3656 /* Profile */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";

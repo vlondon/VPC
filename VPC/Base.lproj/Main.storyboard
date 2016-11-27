@@ -159,6 +159,12 @@
                             <constraint firstAttribute="leadingMargin" secondItem="cTl-f3-Vni" secondAttribute="leading" id="u5F-bS-2Dx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="email" destination="aCu-ye-a5c" id="8jg-WV-bjv"/>
+                        <outlet property="firstName" destination="IjH-2N-iZv" id="abs-ZK-eTU"/>
+                        <outlet property="lastName" destination="Kac-Aa-fGj" id="D8H-GW-Dfh"/>
+                        <outlet property="mobileNumber" destination="HG7-dI-5aV" id="zm8-bw-btx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

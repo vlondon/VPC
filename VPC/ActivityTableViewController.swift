@@ -28,7 +28,10 @@ class ActivityTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         
-        NetworkService.fetchData(fromUrl: "/family/2/activity") { [unowned self] (json, error) in
+        let parentId = UserDefaults.standard.string(forKey: "pid")!
+        print("parentId: \(parentId)")
+        
+        NetworkService.fetchData(fromUrl: "/family/\(parentId)/activity") { [unowned self] (json, error) in
             print("json -> \(json)")
             
             if let activityArray = json?.arrayObject {
@@ -40,7 +43,6 @@ class ActivityTableViewController: UITableViewController {
                     let request = NSBatchDeleteRequest(fetchRequest: fetch)
                     try self.managedObjectContext.execute(request)
                     print("removed!")
-                    
                     
                     // Add new activities
                     activityArray.forEach { activity in
@@ -60,7 +62,7 @@ class ActivityTableViewController: UITableViewController {
                                 
                                 if let consent = activityData["consent"] as? Dictionary<String, Any> {
                                     let parentPid = String(describing: consent["parentPid"] as! NSNumber)
-                                    let serviceId = consent["serviceId"] as! String
+                                    let serviceId = "Consent Entry"
                                     let status = consent["status"] as! String
                                     
                                     Activity.createInManagedObjectContext(self.managedObjectContext, childPid: childPid, parentPid: parentPid, type: activityType, serviceId: serviceId, status: status)
@@ -74,7 +76,7 @@ class ActivityTableViewController: UITableViewController {
                                 if let child = activityData["child"] as? Dictionary<String, Any> {
                                     let childPid = String(describing: child["pid"] as! NSNumber)
                                     let status = child["status"] as! String
-                                    let serviceId = ""
+                                    let serviceId = "Status Log Entry"
                                     
                                     Activity.createInManagedObjectContext(self.managedObjectContext, childPid: childPid, parentPid: parentPid, type: activityType, serviceId: serviceId, status: status)
                                     

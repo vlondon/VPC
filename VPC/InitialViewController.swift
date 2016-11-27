@@ -12,27 +12,44 @@ let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
 
 class InitialViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        // Based on "if registered" load different screen
+        // Based on if parent is registered/logged in - load different screen
         
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let userIsRegistered = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        if let parentId = UserDefaults.standard.string(forKey: "pid") {
+            print("we know parent -> \(parentId)")
+            
+            let userIsRegistered = true // TODO: check for parent by id in Core Data
+            
             if userIsRegistered {
-                let controller = storyboard.instantiateViewController(withIdentifier: "mainTabBarController") as! UITabBarController
-                controller.selectedIndex = 1
-                self.present(controller, animated: true, completion: nil)
+                self.showMainTabBar()
             } else {
-                let controller = storyboard.instantiateViewController(withIdentifier: "registrationViewController")
-                self.present(controller, animated: true, completion: nil)
+                self.showRegistration()
             }
+        } else {
+            self.showRegistration()
         }
         
+        // DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        
+        // }
+        
+    }
+    
+    func showMainTabBar() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let controller = storyboard.instantiateViewController(withIdentifier: "mainTabBarController") as! UITabBarController
+        controller.selectedIndex = 1
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func showRegistration() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let controller = storyboard.instantiateViewController(withIdentifier: "registrationViewController")
+        self.present(controller, animated: true, completion: nil)
     }
     
 }

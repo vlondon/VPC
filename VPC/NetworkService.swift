@@ -39,4 +39,21 @@ class NetworkService {
 //            }
 //        }
     }
+    
+    static func postData(toUrl url: String, parameters: Parameters, callback: ((JSON?, NSError?) -> Void)?) {
+        
+//        let encoding = Alamofire.ParameterEncoding.URLEncodedInURL
+        Alamofire.request("\(AppConfig.apiBaseURL)\(url)", method: .post, parameters: parameters, encoding: URLEncoding.queryString).responseJSON { response in
+            
+            print("postData request: \(response.request)")  // original URL request
+            print(response.response) // HTTP URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
+            
+            if let jsonObject = response.result.value {
+                let json = JSON(jsonObject)
+                callback?(json, nil)
+            }
+        }
+    }
 }

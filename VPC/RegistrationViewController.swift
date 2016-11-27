@@ -8,9 +8,15 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 class RegistrationViewController: UIViewController {
 
+    @IBOutlet weak var firstName: UITextField!
+    @IBOutlet weak var lastName: UITextField!
+    @IBOutlet weak var mobileNumber: UITextField!
+    @IBOutlet weak var email: UITextField!
+    
     private let managedObjectContext: NSManagedObjectContext = {
         return appDelegate.persistentContainer.viewContext
     }()
@@ -28,13 +34,36 @@ class RegistrationViewController: UIViewController {
     
     @IBAction func register(_ sender: UIButton) {
         
-        let parent = Parent.createInManagedObjectContext(self.managedObjectContext, fname: "", lname: "", mobile: "", email: "")
+        // TODO: register parent
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "mainTabBarController") as! UITabBarController
-        controller.selectedIndex = 0
-        // TODO: controller.parent = parent
-        self.present(controller, animated: true, completion: nil)
+        let parameters: Parameters = [
+            "name": "\(firstName.text!) \(lastName.text!)",
+            "mobile": mobileNumber.text!,
+            "email": email.text!
+        ]
+        
+        NetworkService.postData(toUrl: "/parent/register", parameters: parameters) { [unowned self] (json, error) in
+            print("PARENT REGISTER json -> \(json)")
+            
+            print("json?.object: = \(json?.object)")
+            if let parentIdNew = json?.object as? Int { // from api call
+            
+                let parentIdNew = String(parentIdNew)
+                
+                let parent = Parent.createInManagedObjectContext(self.managedObjectContext, fname: self.firstName.text!, lname: self.lastName.text!, mobile: self.mobileNumber.text!, email: self.email.text!, pid: parentIdNew)
+                
+                if let parentId = parent.pid {
+                    UserDefaults.standard.set(parentId, forKey: "pid")
+                }
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "mainTabBarController") as! UITabBarController
+                controller.selectedIndex = 0
+                // TODO: controller.parent = parent
+                self.present(controller, animated: true, completion: nil)
+            }
+            
+        }
         
         
     }

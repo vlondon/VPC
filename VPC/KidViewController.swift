@@ -8,7 +8,8 @@
 
 import UIKit
 import CoreData
-    
+import Alamofire
+
 class KidViewController: UIViewController {
     
     private let managedObjectContext: NSManagedObjectContext = {
@@ -31,7 +32,6 @@ class KidViewController: UIViewController {
     @IBAction func save(_ sender: UIBarButtonItem) {
         // TODO: Save
         
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         /* date format string rules
@@ -40,10 +40,29 @@ class KidViewController: UIViewController {
         
         let date = dateFormatter.date(from: dobField.text!)
         
-        Kid.createInManagedObjectContext(managedObjectContext, fname: firstNameField.text!, lname: lastNameField.text!, dob: date!, school: schoolField.text!, year: yearField.text!, town: townField.text!)
         
-        self.dismiss(animated: true, completion: nil)
+        let parameters: Parameters = [
+            "first-name": "\(firstNameField.text!) \(lastNameField.text!)",
+            "dob": dobField.text!
+        ]
+        
+        let parentId = UserDefaults.standard.string(forKey: "pid")!
+        
+        NetworkService.postData(toUrl: "/parent/\(parentId)/register/child", parameters: parameters) { [unowned self] (json, error) in
+            print("PARENT REGISTER json -> \(json)")
+            
+            print("json?.object: = \(json?.object)")
+            if let childIdNew = json?.object as? Int { // from api call
+                
+                print("childIdNew: \(childIdNew)")
+                
+                Kid.createInManagedObjectContext(self.managedObjectContext, fname: self.firstNameField.text!, lname: self.lastNameField.text!, dob: date!, school: self.schoolField.text!, year: self.yearField.text!, town: self.townField.text!)
+                
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+        }
+        
     }
-    
     
 }

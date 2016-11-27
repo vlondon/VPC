@@ -17,11 +17,6 @@ class KidsTableViewController: UITableViewController {
     let managedObjectContext = appDelegate.persistentContainer.viewContext
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         // Create a new fetch request using the KidItem entity
 //        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
@@ -34,35 +29,79 @@ class KidsTableViewController: UITableViewController {
 //        } catch {
 //            print("Error with request: \(error)")
 //        }
+        
+        
+        
+        let parentId = UserDefaults.standard.string(forKey: "pid")!
+        print("parentId: \(parentId)")
+        
+        NetworkService.fetchData(fromUrl: "/parent/\(parentId)/family") { [unowned self] (json, error) in
+            print("My kids -> \(json)")
+            
+            if let familyObject = json?.object as? AnyObject {
+                print("familyObject: \(familyObject)")
+                
+                do {
+                    // Don't Remove all current kids
+//                    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Kid")
+//                    let request = NSBatchDeleteRequest(fetchRequest: fetch)
+//                    try self.managedObjectContext.execute(request)
+//                    print("removed!")
+                    
+                    guard let dataObject = familyObject["data"] as? AnyObject else {
+                        return
+                    }
+                    
+                    guard let childrenArray = dataObject["children"] as? [AnyObject] else {
+                        return
+                    }
+                    
+                    // Add new kids
+                    childrenArray.forEach { kid in
+                        let kidObject = kid as AnyObject
+                        print("Kid Object: \(kidObject)")
+                        
+                    }
+                    
+                    // TODO: Get all kids info by id
+                    
+                    // Kid.createInManagedObjectContext(self.managedObjectContext, fname: self.firstNameField.text!, lname: self.lastNameField.text!, dob: date!, school: self.schoolField.text!, year: self.yearField.text!, town: self.townField.text!)
+                    
+                    
+                    
+                } catch let error as NSError  {
+                    print("Could not remove \(error), \(error.userInfo)")
+                } catch {
+                    
+                }
+                
+            }
+        }
+        
+        
+//        
+//        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
+//        
+//        managedObjectContext.perform {
+//            self.kids = try! request.execute()
+//            self.tableView.reloadData()
+//        }
+//        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.getKids()
+    }
+    
+    func getKids() {
         let request: NSFetchRequest<Kid> = Kid.fetchRequest()
         
         managedObjectContext.perform {
             self.kids = try! request.execute()
             self.tableView.reloadData()
         }
-        
-        
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            return
-//        }
-//        
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        
-//        let entity = NSEntityDescription.entity(forEntityName: "Kid",
-//                                                in: managedContext)!
-//        
-//        let person = NSManagedObject(entity: entity,
-//                                     insertInto: managedContext)
-//        
-//        person.setValue(name, forKeyPath: "name")
-//        
-//        do {
-//            try managedContext.save()
-//            people.append(person)
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
-        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

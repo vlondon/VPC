@@ -21,23 +21,26 @@ extension Kid {
         return NSFetchRequest<Kid>(entityName: self.entityName);
     }
     
+    @NSManaged public var dob: NSDate?
     @NSManaged public var fname: String?
     @NSManaged public var lname: String?
-    @NSManaged public var dob: Date?
     @NSManaged public var school: String?
-    @NSManaged public var year: String?
     @NSManaged public var town: String?
+    @NSManaged public var year: String?
+    @NSManaged public var cid: String?
     
     class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, dob: Date, school: String, year: String, town: String) -> Kid {
         
         let newItem = Kid(context: moc)
         
+        // newItem.cid = cid
         newItem.fname = fname
         newItem.lname = lname
-        newItem.dob = dob
+        newItem.dob = dob as NSDate?
         newItem.school = school
         newItem.year = year
         newItem.town = town
+        newItem.cid = "" // TODO: childId
         
         //save the object
         do {
