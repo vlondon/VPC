@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99154F961DEB3C3D009D3656 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99154F951DEB3C3D009D3656 /* NetworkService.swift */; };
+		99154F981DEB3D70009D3656 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99154F971DEB3D70009D3656 /* AppConfig.swift */; };
 		99BC98921DEB016500B22233 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98911DEB016500B22233 /* AppDelegate.swift */; };
 		99BC98941DEB016500B22233 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98931DEB016500B22233 /* RegistrationViewController.swift */; };
 		99BC98971DEB016500B22233 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99BC98951DEB016500B22233 /* Main.storyboard */; };
@@ -23,9 +25,15 @@
 		99BC98BF1DEB2A9D00B22233 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98B91DEB2A9D00B22233 /* Parent.swift */; };
 		99BC98C11DEB2A9D00B22233 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98BB1DEB2A9D00B22233 /* Activity.swift */; };
 		99BC98C31DEB2A9D00B22233 /* Kid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98BD1DEB2A9D00B22233 /* Kid.swift */; };
+		C8CDEA0F63547AC65381334D /* Pods_VPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E6DFE9CFB2E273C0DF446CD /* Pods_VPC.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E6DFE9CFB2E273C0DF446CD /* Pods_VPC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VPC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		60C08B470EFC2793CEDE7B34 /* Pods-VPC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPC.release.xcconfig"; path = "Pods/Target Support Files/Pods-VPC/Pods-VPC.release.xcconfig"; sourceTree = "<group>"; };
+		6371116138F73CEA97003E6E /* Pods-VPC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPC.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VPC/Pods-VPC.debug.xcconfig"; sourceTree = "<group>"; };
+		99154F951DEB3C3D009D3656 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		99154F971DEB3D70009D3656 /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		99BC988E1DEB016500B22233 /* VPC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99BC98911DEB016500B22233 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99BC98931DEB016500B22233 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -51,17 +59,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8CDEA0F63547AC65381334D /* Pods_VPC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		471D815386AE7ED9983E259E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E6DFE9CFB2E273C0DF446CD /* Pods_VPC.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		99154F941DEB3C15009D3656 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				99154F951DEB3C3D009D3656 /* NetworkService.swift */,
+				99154F971DEB3D70009D3656 /* AppConfig.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		99BC98851DEB016500B22233 = {
 			isa = PBXGroup;
 			children = (
 				99BC98901DEB016500B22233 /* VPC */,
 				99BC988F1DEB016500B22233 /* Products */,
+				C2AD2557B661E5E5FA81CBE2 /* Pods */,
+				471D815386AE7ED9983E259E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				99BC98911DEB016500B22233 /* AppDelegate.swift */,
+				99154F941DEB3C15009D3656 /* Services */,
 				99BC98B81DEB27BF00B22233 /* Model */,
 				99BC98B71DEB27B800B22233 /* Views */,
 				99BC98B61DEB27AA00B22233 /* View Controllers */,
@@ -121,6 +150,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		C2AD2557B661E5E5FA81CBE2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6371116138F73CEA97003E6E /* Pods-VPC.debug.xcconfig */,
+				60C08B470EFC2793CEDE7B34 /* Pods-VPC.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -128,9 +166,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99BC98A31DEB016500B22233 /* Build configuration list for PBXNativeTarget "VPC" */;
 			buildPhases = (
+				6C663992878D34FF10CB4BDC /* [CP] Check Pods Manifest.lock */,
 				99BC988A1DEB016500B22233 /* Sources */,
 				99BC988B1DEB016500B22233 /* Frameworks */,
 				99BC988C1DEB016500B22233 /* Resources */,
+				2322B8BFB1FE237CD1B87674 /* [CP] Embed Pods Frameworks */,
+				A5407F9F59148EAF5BA321B2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -189,6 +230,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2322B8BFB1FE237CD1B87674 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VPC/Pods-VPC-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6C663992878D34FF10CB4BDC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A5407F9F59148EAF5BA321B2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VPC/Pods-VPC-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		99BC988A1DEB016500B22233 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -200,6 +289,8 @@
 				99BC98B31DEB0EA900B22233 /* ActivityTableCell.swift in Sources */,
 				99BC98AD1DEB0C2A00B22233 /* KidsTableViewController.swift in Sources */,
 				99BC98941DEB016500B22233 /* RegistrationViewController.swift in Sources */,
+				99154F981DEB3D70009D3656 /* AppConfig.swift in Sources */,
+				99154F961DEB3C3D009D3656 /* NetworkService.swift in Sources */,
 				99BC98BF1DEB2A9D00B22233 /* Parent.swift in Sources */,
 				99BC989A1DEB016500B22233 /* VPC.xcdatamodeld in Sources */,
 				99BC98AB1DEB0A3700B22233 /* ProfileViewController.swift in Sources */,
@@ -325,6 +416,7 @@
 		};
 		99BC98A41DEB016500B22233 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6371116138F73CEA97003E6E /* Pods-VPC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GVYJ5N3B47;
@@ -338,6 +430,7 @@
 		};
 		99BC98A51DEB016500B22233 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60C08B470EFC2793CEDE7B34 /* Pods-VPC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GVYJ5N3B47;

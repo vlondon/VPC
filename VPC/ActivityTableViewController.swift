@@ -8,10 +8,19 @@
 
 
 import UIKit
+import CoreData
+
+let kStatusChildConsentLogEntry = "com.trustelevate.vpc.api.data.domain.ChildConsentLogEntry"
+let kStatusChildStatusLogEntry = "com.trustelevate.vpc.api.data.domain.ChildStatusLogEntry"
 
 class ActivityTableViewController: UITableViewController {
     
-    var activities = [Dictionary<String, String>]()
+    var activities = [Activity]()
+    
+    private let managedObjectContext: NSManagedObjectContext = {
+        return appDelegate.persistentContainer.viewContext
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,21 +28,89 @@ class ActivityTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         
-        activities.append([
-            "name": "Tommy",
-            "service": "Lego",
-            "status": "approved"
-            ])
-        activities.append([
-            "name": "Fiona",
-            "service": "Disney",
-            "status": "pending"
-            ])
-        activities.append([
-            "name": "Max",
-            "service": "Lego",
-            "status": "pending"
-            ])
+        NetworkService.fetchData(fromUrl: "/family/2/activity") { [unowned self] (json, error) in
+            print("json -> \(json)")
+            
+            if let activityArray = json?.arrayObject {
+                print("activityArray: \(activityArray)")
+                
+                do {
+                    // Remove all saved activities
+                    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
+                    let request = NSBatchDeleteRequest(fetchRequest: fetch)
+                    try self.managedObjectContext.execute(request)
+                    print("removed!")
+                    
+                    
+                    // Add new activities
+                    activityArray.forEach { activity in
+                        let activityObject = activity as AnyObject
+                        print("activityObject: \(activityObject)")
+                        
+                        let activityType = activityObject["type"] as! String
+                        print("activityType: \(activityType)")
+                        
+                        if let activityData = activityObject["data"] as? Dictionary<String, Any> {
+                            
+                            print("activityData: \(activityData)")
+                            
+                            switch activityType {
+                            case kStatusChildConsentLogEntry:
+                                let childPid = String(activityData["childPid"] as! Int)
+                                
+                                if let consent = activityData["consent"] as? Dictionary<String, Any> {
+                                    let parentPid = String(describing: consent["parentPid"] as! NSNumber)
+                                    let serviceId = consent["serviceId"] as! String
+                                    let status = consent["status"] as! String
+                                    
+                                    Activity.createInManagedObjectContext(self.managedObjectContext, childPid: childPid, parentPid: parentPid, type: activityType, serviceId: serviceId, status: status)
+                                    
+                                    self.getActivity()
+                                }
+                                
+                            case kStatusChildStatusLogEntry:
+                                let parentPid = String(activityData["parentPid"] as! Int)
+                                
+                                if let child = activityData["child"] as? Dictionary<String, Any> {
+                                    let childPid = String(describing: child["pid"] as! NSNumber)
+                                    let status = child["status"] as! String
+                                    let serviceId = ""
+                                    
+                                    Activity.createInManagedObjectContext(self.managedObjectContext, childPid: childPid, parentPid: parentPid, type: activityType, serviceId: serviceId, status: status)
+                                    
+                                    self.tableView.reloadData()
+                                }
+                                
+                            default:
+                                break
+                            }
+                        }
+                    }
+
+                        
+                } catch let error as NSError  {
+                    print("Could not remove \(error), \(error.userInfo)")
+                } catch {
+                    
+                }
+                
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.getActivity()
+    }
+    
+    func getActivity() {
+        let request: NSFetchRequest<Activity> = Activity.fetchRequest()
+        
+        managedObjectContext.perform {
+            self.activities = try! request.execute()
+            self.tableView.reloadData()
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,9 +125,9 @@ class ActivityTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityTableCell
         
-        cell.nameLabel.text = activities[indexPath.row]["name"]
-        cell.serviceNameLabel.text = activities[indexPath.row]["service"]
-        cell.statusLabel.text = activities[indexPath.row]["status"]
+        cell.nameLabel.text = activities[indexPath.row].childPid
+        cell.serviceNameLabel.text = activities[indexPath.row].serviceId
+        cell.statusLabel.text = activities[indexPath.row].status
         
         return cell
         

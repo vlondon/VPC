@@ -29,7 +29,6 @@ extension Kid {
     @NSManaged public var town: String?
     
     class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, dob: Date, school: String, year: String, town: String) -> Kid {
-        // let newItem = NSEntityDescription.insertNewObject(forEntityName: self.entityName, into: moc) as! Kid
         
         let newItem = Kid(context: moc)
         
@@ -39,6 +38,16 @@ extension Kid {
         newItem.school = school
         newItem.year = year
         newItem.town = town
+        
+        //save the object
+        do {
+            try moc.save()
+            print("saved!")
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        } catch {
+            
+        }
         
         return newItem
     }

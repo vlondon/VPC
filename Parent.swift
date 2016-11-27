@@ -26,12 +26,23 @@ extension Parent {
     @NSManaged public var email: String?
     
     class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, mobile: String, email: String) -> Parent {
-        let newItem = NSEntityDescription.insertNewObject(forEntityName: self.entityName, into: moc) as! Parent
+        
+        let newItem = Parent(context: moc)
         
         newItem.fname = fname
         newItem.lname = lname
         newItem.mobile = mobile
         newItem.email = email
+        
+        //save the object
+        do {
+            try moc.save()
+            print("saved!")
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        } catch {
+            
+        }
         
         return newItem
     }
