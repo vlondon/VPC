@@ -29,18 +29,17 @@ extension Kid {
     @NSManaged public var year: String?
     @NSManaged public var cid: String?
     
-    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, dob: Date, school: String, year: String, town: String) -> Kid {
+    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, dob: Date, school: String, year: String, town: String, cid: String) -> Kid {
         
         let newItem = Kid(context: moc)
         
-        // newItem.cid = cid
+        newItem.cid = cid
         newItem.fname = fname
         newItem.lname = lname
         newItem.dob = dob as NSDate?
         newItem.school = school
         newItem.year = year
         newItem.town = town
-        newItem.cid = "" // TODO: childId
         
         //save the object
         do {

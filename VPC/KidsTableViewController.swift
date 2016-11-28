@@ -56,17 +56,38 @@ class KidsTableViewController: UITableViewController {
                         return
                     }
                     
-                    // Add new kids
+                    // Get kids info by id
                     childrenArray.forEach { kid in
                         let kidObject = kid as AnyObject
                         print("Kid Object: \(kidObject)")
                         
+                        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Kid")
+                        let kidId = String(describing: kid["pid"] as! NSNumber)
+                        fetchRequest.predicate = NSPredicate(format: "cid == %@", kidId)
+                        // let request = NSBatchUpdateRequest(fetchRequest: fetch)
+                        
+                        // NSBatchUpdateRequest
+                        
+                        do {
+                            // let kidsFetch = try moc.executeFetchRequest(employeesFetch) as! [AAAEmployeeMO]
+                            
+                            // let kids = try self.managedObjectContext.execute(fetch)
+                            // print("kids: \(kids)")
+                            let kids = try self.managedObjectContext.fetch(fetchRequest) as! [Kid]
+                            print("kids: \(kids)")
+                            
+                            if let kid = kids.first {
+                                self.kids.append(kid)
+                                self.tableView.reloadData()
+                            }
+                            
+                            // print("no kids with id: \(kidId)")
+                            
+                        } catch {
+                            fatalError("Failed to fetch kids: \(error)")
+                        }
+                        
                     }
-                    
-                    // TODO: Get all kids info by id
-                    
-                    // Kid.createInManagedObjectContext(self.managedObjectContext, fname: self.firstNameField.text!, lname: self.lastNameField.text!, dob: date!, school: self.schoolField.text!, year: self.yearField.text!, town: self.townField.text!)
-                    
                     
                     
                 } catch let error as NSError  {
@@ -92,17 +113,17 @@ class KidsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.getKids()
+        // self.getKids()
     }
     
-    func getKids() {
-        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
-        
-        managedObjectContext.perform {
-            self.kids = try! request.execute()
-            self.tableView.reloadData()
-        }
-    }
+//    func getKids() {
+//        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
+//        
+//        managedObjectContext.perform {
+//            self.kids = try! request.execute()
+//            self.tableView.reloadData()
+//        }
+//    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

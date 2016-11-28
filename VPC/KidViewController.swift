@@ -55,8 +55,9 @@ class KidViewController: UIViewController {
             if let childIdNew = json?.object as? Int { // from api call
                 
                 print("childIdNew: \(childIdNew)")
+                let childIdNewString = String(childIdNew)
                 
-                Kid.createInManagedObjectContext(self.managedObjectContext, fname: self.firstNameField.text!, lname: self.lastNameField.text!, dob: date!, school: self.schoolField.text!, year: self.yearField.text!, town: self.townField.text!)
+                Kid.createInManagedObjectContext(self.managedObjectContext, fname: self.firstNameField.text!, lname: self.lastNameField.text!, dob: date!, school: self.schoolField.text!, year: self.yearField.text!, town: self.townField.text!, cid: childIdNewString)
                 
                 self.dismiss(animated: true, completion: nil)
             }
