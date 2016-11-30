@@ -27,7 +27,7 @@ extension Activity {
     @NSManaged public var serviceId: String?
     @NSManaged public var status: String?
     
-    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, childPid: String, parentPid: String, type: String, serviceId: String, status: String) -> Activity {
+    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, childPid: String, parentPid: String, type: String, serviceId: String, status: String) {
         
         let newItem = Activity(context: moc)
         
@@ -47,6 +47,6 @@ extension Activity {
             
         }
         
-        return newItem
+        // return newItem
     }
 }

@@ -42,12 +42,6 @@ class KidsTableViewController: UITableViewController {
                 print("familyObject: \(familyObject)")
                 
                 do {
-                    // Don't Remove all current kids
-//                    let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Kid")
-//                    let request = NSBatchDeleteRequest(fetchRequest: fetch)
-//                    try self.managedObjectContext.execute(request)
-//                    print("removed!")
-                    
                     guard let dataObject = familyObject["data"] as? AnyObject else {
                         return
                     }
@@ -64,27 +58,18 @@ class KidsTableViewController: UITableViewController {
                         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Kid")
                         let kidId = String(describing: kid["pid"] as! NSNumber)
                         fetchRequest.predicate = NSPredicate(format: "cid == %@", kidId)
-                        // let request = NSBatchUpdateRequest(fetchRequest: fetch)
-                        
-                        // NSBatchUpdateRequest
                         
                         do {
-                            // let kidsFetch = try moc.executeFetchRequest(employeesFetch) as! [AAAEmployeeMO]
-                            
-                            // let kids = try self.managedObjectContext.execute(fetch)
-                            // print("kids: \(kids)")
                             let kids = try self.managedObjectContext.fetch(fetchRequest) as! [Kid]
-                            print("kids: \(kids)")
                             
                             if let kid = kids.first {
                                 self.kids.append(kid)
                                 self.tableView.reloadData()
+                            } else {
+                                print("no kid with id: \(kidId)")
                             }
-                            
-                            // print("no kids with id: \(kidId)")
-                            
                         } catch {
-                            fatalError("Failed to fetch kids: \(error)")
+                            print("Failed to fetch kids: \(error)")
                         }
                         
                     }
@@ -137,7 +122,9 @@ class KidsTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "kidsCell", for: indexPath) as! KidsTableCell
         
-        cell.nameLabel.text = kids[indexPath.row].fname
+        let firstName = kids[indexPath.row].fname ?? ""
+        let lastName = kids[indexPath.row].lname ?? ""
+        cell.nameLabel.text = "\(firstName) \(lastName)"
         
         return cell
         

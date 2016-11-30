@@ -29,14 +29,6 @@ extension Parent {
     
     class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, mobile: String, email: String, pid: String) -> Parent {
         
-        
-        print("parent:")
-        print("\(fname)")
-        print("\(lname)")
-        print("\(mobile)")
-        print("\(email)")
-        print("\(pid)")
-        
         let newItem = Parent(context: moc)
         
         newItem.fname = fname

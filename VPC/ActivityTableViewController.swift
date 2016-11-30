@@ -17,6 +17,8 @@ class ActivityTableViewController: UITableViewController {
     
     var activities = [Activity]()
     
+    var kids: Dictionary<String, Kid> = [:]
+    
     private let managedObjectContext: NSManagedObjectContext = {
         return appDelegate.persistentContainer.viewContext
     }()
@@ -67,7 +69,9 @@ class ActivityTableViewController: UITableViewController {
                                     
                                     Activity.createInManagedObjectContext(self.managedObjectContext, childPid: childPid, parentPid: parentPid, type: activityType, serviceId: serviceId, status: status)
                                     
-                                    self.getActivity()
+                                    if let kid = self.getKid(byId: childPid) {
+                                        self.kids[childPid] = kid
+                                    }
                                 }
                                 
                             case kStatusChildStatusLogEntry:
@@ -80,7 +84,9 @@ class ActivityTableViewController: UITableViewController {
                                     
                                     Activity.createInManagedObjectContext(self.managedObjectContext, childPid: childPid, parentPid: parentPid, type: activityType, serviceId: serviceId, status: status)
                                     
-                                    self.tableView.reloadData()
+                                    if let kid = self.getKid(byId: childPid) {
+                                        self.kids[childPid] = kid
+                                    }
                                 }
                                 
                             default:
@@ -88,8 +94,9 @@ class ActivityTableViewController: UITableViewController {
                             }
                         }
                     }
-
-                        
+                    
+                    self.tableView.reloadData()
+                    
                 } catch let error as NSError  {
                     print("Could not remove \(error), \(error.userInfo)")
                 } catch {
@@ -97,6 +104,26 @@ class ActivityTableViewController: UITableViewController {
                 }
                 
             }
+        }
+    }
+    
+    func getKid(byId kidId: String) -> Kid? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Kid")
+        fetchRequest.predicate = NSPredicate(format: "cid == %@", kidId)
+        
+        do {
+            let kids = try self.managedObjectContext.fetch(fetchRequest) as! [Kid]
+            
+            if let kid = kids.first {
+                self.tableView.reloadData()
+                return kid
+            } else {
+                print("no kid with id: \(kidId)")
+                return nil
+            }
+        } catch {
+            print("Failed to fetch kids: \(error)")
+            return nil
         }
     }
     
@@ -127,9 +154,19 @@ class ActivityTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "activityCell", for: indexPath) as! ActivityTableCell
         
-        cell.nameLabel.text = activities[indexPath.row].childPid
+        if let childPid = activities[indexPath.row].childPid {
+            if let kid = self.kids[childPid] {
+                let firstName = kid.fname ?? ""
+                let lastName = kid.lname ?? ""
+                cell.nameLabel.text = "\(firstName) \(lastName)"
+            } else {
+                cell.nameLabel.text = childPid
+            }
+        }
         cell.serviceNameLabel.text = activities[indexPath.row].serviceId
-        cell.statusLabel.text = activities[indexPath.row].status
+        if let status = activities[indexPath.row].status {
+            cell.setStatusLabelText(status)
+        }
         
         return cell
         

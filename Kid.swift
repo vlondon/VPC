@@ -29,7 +29,7 @@ extension Kid {
     @NSManaged public var year: String?
     @NSManaged public var cid: String?
     
-    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, dob: Date, school: String, year: String, town: String, cid: String) -> Kid {
+    class func createInManagedObjectContext(_ moc: NSManagedObjectContext, fname: String, lname: String, dob: Date, school: String, year: String, town: String, cid: String) {
         
         let newItem = Kid(context: moc)
         
@@ -51,7 +51,7 @@ extension Kid {
             
         }
         
-        return newItem
+        // return newItem
     }
     
 }
