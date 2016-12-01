@@ -12,5 +12,6 @@ class KidsTableCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     
+    var kid: Kid!
     
 }

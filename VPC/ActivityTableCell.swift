@@ -14,7 +14,26 @@ class ActivityTableCell: UITableViewCell {
     @IBOutlet weak var serviceNameLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     
-    func setStatusLabelText(_ text: String) {
+    var childPid: String?
+    var kid: Kid?
+    
+    fileprivate(set) var activity: Activity?
+    
+    fileprivate(set) var serviceName: String? {
+        didSet {
+            switch self.serviceName! {
+            case kStatusChildConsentLogEntry,
+                 kStatusChildStatusLog:
+                self.serviceNameLabel.text = "Consent request"
+            case kStatusChildStatusLogEntry:
+                self.serviceNameLabel.text = "Status change"
+            default:
+                break
+            }
+        }
+    }
+    
+    fileprivate func setStatusLabelText(_ text: String) {
         self.statusLabel.text = text
         
         switch text {
@@ -25,7 +44,27 @@ class ActivityTableCell: UITableViewCell {
         default:
             statusLabel.textColor = UIColor(red: 0.0157, green: 0.0667, blue: 0.0275, alpha: 1.0) /* #041107 */
         }
-
+    }
+    
+    // Public
+    
+    func setActivityInfo(for activity: Activity) {
+        self.activity = activity
+        
+        if let kid = self.kid {
+            let firstName = kid.fname ?? ""
+            let lastName = kid.lname ?? ""
+            self.nameLabel.text = "\(firstName) \(lastName)"
+        } else {
+            self.nameLabel.text = childPid
+        }
+        
+        self.serviceName = activity.type
+        
+        if let status = activity.status {
+            self.setStatusLabelText(status)
+        }
+        
     }
     
 }

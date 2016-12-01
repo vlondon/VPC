@@ -16,6 +16,7 @@ class InitialViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // Based on if parent is registered/logged in - load different screen
+        // UserDefaults.standard.set("2", forKey: "pid")
         
         if let parentId = UserDefaults.standard.string(forKey: "pid") {
             print("we know parent -> \(parentId)")

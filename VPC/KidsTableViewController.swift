@@ -12,6 +12,7 @@ import CoreData
 class KidsTableViewController: UITableViewController {
     
     var kids = [Kid]()
+    var selectedKid: Kid!
     
     // Retreive the managedObjectContext from AppDelegate
     let managedObjectContext = appDelegate.persistentContainer.viewContext
@@ -30,14 +31,33 @@ class KidsTableViewController: UITableViewController {
 //            print("Error with request: \(error)")
 //        }
         
+//        self.getKids()
         
         
+//        
+//        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
+//        
+//        managedObjectContext.perform {
+//            self.kids = try! request.execute()
+//            self.tableView.reloadData()
+//        }
+//        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.getKids()
+    }
+    
+    func getKids() {
         let parentId = UserDefaults.standard.string(forKey: "pid")!
         print("parentId: \(parentId)")
         
         NetworkService.fetchData(fromUrl: "/parent/\(parentId)/family") { [unowned self] (json, error) in
             print("My kids -> \(json)")
             
+            self.kids = []
             if let familyObject = json?.object as? AnyObject {
                 print("familyObject: \(familyObject)")
                 
@@ -67,6 +87,9 @@ class KidsTableViewController: UITableViewController {
                                 self.tableView.reloadData()
                             } else {
                                 print("no kid with id: \(kidId)")
+                                
+                                
+                                
                             }
                         } catch {
                             print("Failed to fetch kids: \(error)")
@@ -83,22 +106,6 @@ class KidsTableViewController: UITableViewController {
                 
             }
         }
-        
-        
-//        
-//        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
-//        
-//        managedObjectContext.perform {
-//            self.kids = try! request.execute()
-//            self.tableView.reloadData()
-//        }
-//        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // self.getKids()
     }
     
 //    func getKids() {
@@ -126,8 +133,26 @@ class KidsTableViewController: UITableViewController {
         let lastName = kids[indexPath.row].lname ?? ""
         cell.nameLabel.text = "\(firstName) \(lastName)"
         
+//        cell.nameLabel.text = kids[indexPath.row].fname
+        cell.kid = kids[indexPath.row]
+        
         return cell
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! KidsTableCell
+        
+        self.selectedKid = cell.kid
+        
+        self.performSegue(withIdentifier: "showActivity", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let vc = segue.destination as? ActivityTableViewController {
+            vc.selectedKid = self.selectedKid
+        }
     }
     
 }

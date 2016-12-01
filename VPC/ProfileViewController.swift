@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
                     self.lastNameLabel.text = parent.lname
                 } else {
                     print("no parent with id: \(parentId)")
-                    self.logoutCurrentUser()
+                    // self.logoutCurrentUser()
                 }
             } catch {
                 fatalError("Failed to fetch kids: \(error)")
