@@ -25,6 +25,7 @@
 		99BC98BF1DEB2A9D00B22233 /* Parent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98B91DEB2A9D00B22233 /* Parent.swift */; };
 		99BC98C11DEB2A9D00B22233 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98BB1DEB2A9D00B22233 /* Activity.swift */; };
 		99BC98C31DEB2A9D00B22233 /* Kid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BC98BD1DEB2A9D00B22233 /* Kid.swift */; };
+		99FD52961DF4B94900203DF5 /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FD52951DF4B94900203DF5 /* UIViewController+Keyboard.swift */; };
 		C8CDEA0F63547AC65381334D /* Pods_VPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E6DFE9CFB2E273C0DF446CD /* Pods_VPC.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		99BC98B91DEB2A9D00B22233 /* Parent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parent.swift; path = ../Parent.swift; sourceTree = "<group>"; };
 		99BC98BB1DEB2A9D00B22233 /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Activity.swift; path = ../Activity.swift; sourceTree = "<group>"; };
 		99BC98BD1DEB2A9D00B22233 /* Kid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Kid.swift; path = ../Kid.swift; sourceTree = "<group>"; };
+		99FD52951DF4B94900203DF5 /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				99BC98911DEB016500B22233 /* AppDelegate.swift */,
+				99FD52971DF4B95200203DF5 /* Helpers */,
 				99154F941DEB3C15009D3656 /* Services */,
 				99BC98B81DEB27BF00B22233 /* Model */,
 				99BC98B71DEB27B800B22233 /* Views */,
@@ -172,6 +175,14 @@
 				99BC98BB1DEB2A9D00B22233 /* Activity.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		99FD52971DF4B95200203DF5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				99FD52951DF4B94900203DF5 /* UIViewController+Keyboard.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		C2AD2557B661E5E5FA81CBE2 /* Pods */ = {
@@ -310,6 +321,7 @@
 				99BC98C31DEB2A9D00B22233 /* Kid.swift in Sources */,
 				99BC98B11DEB0E8200B22233 /* ActivityTableViewController.swift in Sources */,
 				99BC98C11DEB2A9D00B22233 /* Activity.swift in Sources */,
+				99FD52961DF4B94900203DF5 /* UIViewController+Keyboard.swift in Sources */,
 				99BC98B31DEB0EA900B22233 /* ActivityTableCell.swift in Sources */,
 				99BC98AD1DEB0C2A00B22233 /* KidsTableViewController.swift in Sources */,
 				99BC98941DEB016500B22233 /* RegistrationViewController.swift in Sources */,

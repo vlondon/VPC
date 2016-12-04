@@ -17,13 +17,19 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var mobileNumber: UITextField!
     @IBOutlet weak var email: UITextField!
     
+    @IBOutlet weak var registerButtonBottomConstraint: NSLayoutConstraint!
+    
     private let managedObjectContext: NSManagedObjectContext = {
         return appDelegate.persistentContainer.viewContext
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.hideKeyboardWhenTappedAround()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,10 +70,23 @@ class RegistrationViewController: UIViewController {
             }
             
         }
-        
-        
     }
     
+    // MARK: Keyboard events
+    
+    func keyboardWasShown(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.3) {
+                self.registerButtonBottomConstraint.constant = keyboardSize.height + 20
+            }
+        }
+    }
+    
+    func keyboardWillBeHidden(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) {
+            self.registerButtonBottomConstraint.constant = 40
+        }
+    }
     
 }
 
