@@ -40,11 +40,10 @@ extension Activity {
         //save the object
         do {
             try moc.save()
-            print("saved!")
         } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Activity - Could not save \(error), \(error.userInfo)")
         } catch {
-            
+            print("Activity - Could not save. Unknown error.")
         }
         
         // return newItem

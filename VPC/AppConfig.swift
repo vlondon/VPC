@@ -12,5 +12,4 @@ class AppConfig: NSObject {
     
     static let apiBaseURL = "http://vpc.api.amient.uk/c"
     
-    
 }

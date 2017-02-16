@@ -31,16 +31,8 @@ class RegistrationViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     @IBAction func register(_ sender: UIButton) {
-        
-        // TODO: register parent
         
         let parameters: Parameters = [
             "name": "\(firstName.text!) \(lastName.text!)",
@@ -49,9 +41,7 @@ class RegistrationViewController: UIViewController {
         ]
         
         NetworkService.postData(toUrl: "/parent/register", parameters: parameters) { [unowned self] (json, error) in
-            print("PARENT REGISTER json -> \(json)")
             
-            print("json?.object: = \(json?.object)")
             if let parentIdNew = json?.object as? Int { // from api call
             
                 let parentIdNew = String(parentIdNew)

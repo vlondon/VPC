@@ -40,11 +40,10 @@ extension Parent {
         //save the object
         do {
             try moc.save()
-            print("saved!")
         } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Parent - Could not save \(error), \(error.userInfo)")
         } catch {
-            
+            print("Parent - Could not save. Unknown error.")
         }
         
         return newItem

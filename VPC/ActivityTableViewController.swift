@@ -27,7 +27,6 @@ class ActivityTableViewController: UITableViewController {
         return appDelegate.persistentContainer.viewContext
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,7 +63,6 @@ class ActivityTableViewController: UITableViewController {
         let url = "/parent/\(parentId)/child/\(cid)/activity"
         
         NetworkService.fetchData(fromUrl: url) { [unowned self] (json, error) in
-            print("json -> \(json)")
             
             var activityArray = [Any]()
             
@@ -77,7 +75,6 @@ class ActivityTableViewController: UITableViewController {
             }
             
             if activityArray.count > 0 {
-                print("activityArray: \(activityArray)")
                 
                 do {
                     self.activities = []
@@ -86,20 +83,14 @@ class ActivityTableViewController: UITableViewController {
                     let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
                     let request = NSBatchDeleteRequest(fetchRequest: fetch)
                     try self.managedObjectContext.execute(request)
-                    print("removed!")
                     
                     // Add new activities
                     for activity in activityArray {
                         let activityObject = activity as AnyObject
-                        print("activityObject: \(activityObject)")
                         
                         let activityType = activityObject["type"] as! String
-                        print("activityType: \(activityType)")
                         
                         if let activityData = activityObject["data"] as? [String: Any] {
-                            
-                            print("activityData: \(activityData)")
-                            
                             
                             if let consentLog = activityData["consentLog"] as? [String: Any] {
                                 
@@ -118,9 +109,7 @@ class ActivityTableViewController: UITableViewController {
                                         }
                                     }
                                 }
-                                
                             }
-                            
                         }
                     }
                     
@@ -140,10 +129,8 @@ class ActivityTableViewController: UITableViewController {
         let url = "/family/\(parentId)/activity"
         
         NetworkService.fetchData(fromUrl: url) { [unowned self] (json, error) in
-            print("json -> \(json)")
             
             if let activityArray = json?.arrayObject {
-                print("activityArray: \(activityArray)")
                 
                 do {
                     self.activities = []
@@ -152,19 +139,13 @@ class ActivityTableViewController: UITableViewController {
                     let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
                     let request = NSBatchDeleteRequest(fetchRequest: fetch)
                     try self.managedObjectContext.execute(request)
-                    print("removed!")
                     
                     // Add new activities
                     for activity in activityArray {
                         let activityObject = activity as AnyObject
-                        print("activityObject: \(activityObject)")
-                        
                         let activityType = activityObject["type"] as! String
-                        print("activityType: \(activityType)")
                         
                         if let activityData = activityObject["data"] as? [String: Any] {
-                            
-                            print("activityData: \(activityData)")
                             
                             switch activityType {
                             case kStatusChildConsentLogEntry:
@@ -275,14 +256,10 @@ class ActivityTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! ActivityTableCell
         
-        print("cell.activity: \(cell.activity)")
         if cell.serviceName == kStatusChildStatusLog,
             let kid = cell.kid,
             let activity = cell.activity,
             let childPid = activity.childPid {
-            
-            print("ALERT FOR KID: \(kid.cid)")
-            
             
             let alert = UIAlertController(title: "Do you want to approve?", message: "Please Choose", preferredStyle: .actionSheet)
             
@@ -303,8 +280,6 @@ class ActivityTableViewController: UITableViewController {
     }
     
     func respondToConsent(approved: Bool, serviceId: String?, childPid: String) {
-        print("Approve")
-        
         var parameters: Parameters = [:]
         
         if let serviceId = serviceId {
@@ -320,7 +295,6 @@ class ActivityTableViewController: UITableViewController {
         let parentId = UserDefaults.standard.string(forKey: "pid")!
         
         NetworkService.postData(toUrl: "/parent/\(parentId)/child/\(childPid)/consent", parameters: parameters) { [unowned self] (json, error) in
-            print("done: \(json)")
             self.getChildActivity(forId: childPid)
         }
     }

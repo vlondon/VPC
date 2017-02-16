@@ -44,11 +44,10 @@ extension Kid {
         //save the object
         do {
             try moc.save()
-            print("saved!")
         } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Kid - Could not save \(error), \(error.userInfo)")
         } catch {
-            
+            print("Kid - Could not save. Unknown error.")
         }
         
         // return newItem

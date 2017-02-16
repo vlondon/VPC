@@ -87,9 +87,6 @@ class KidsTableViewController: UITableViewController {
                                 self.tableView.reloadData()
                             } else {
                                 print("no kid with id: \(kidId)")
-                                
-                                
-                                
                             }
                         } catch {
                             print("Failed to fetch kids: \(error)")
@@ -108,15 +105,6 @@ class KidsTableViewController: UITableViewController {
         }
     }
     
-//    func getKids() {
-//        let request: NSFetchRequest<Kid> = Kid.fetchRequest()
-//        
-//        managedObjectContext.perform {
-//            self.kids = try! request.execute()
-//            self.tableView.reloadData()
-//        }
-//    }
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -126,30 +114,23 @@ class KidsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "kidsCell", for: indexPath) as! KidsTableCell
         
         let firstName = kids[indexPath.row].fname ?? ""
         let lastName = kids[indexPath.row].lname ?? ""
         cell.nameLabel.text = "\(firstName) \(lastName)"
-        
-//        cell.nameLabel.text = kids[indexPath.row].fname
         cell.kid = kids[indexPath.row]
         
         return cell
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! KidsTableCell
-        
         self.selectedKid = cell.kid
-        
         self.performSegue(withIdentifier: "showActivity", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if let vc = segue.destination as? ActivityTableViewController {
             vc.selectedKid = self.selectedKid
         }

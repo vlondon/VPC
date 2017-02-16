@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController {
     func logoutCurrentUser() {
         UserDefaults.standard.set(nil, forKey: "pid")
         
-        // TODO: Clean out database
+        // Clean out database
         
         // Remove all activities
         let fetchActivities = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
